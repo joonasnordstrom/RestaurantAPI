@@ -44,6 +44,20 @@ namespace RestaurantAPI.Controllers.API
         }
 
         [HttpDelete]
+        public IHttpActionResult Delete(int id)
+        {
+            var restaurantToDelete = _context.Restaurants.ToList().SingleOrDefault(r => r.ID == id);
+
+            if (restaurantToDelete != null)
+            {
+                _context.Restaurants.Remove(restaurantToDelete);
+                _context.SaveChanges();
+                return Ok();
+            }
+            return NotFound();
+                
+
+        }
          
     }
 }
