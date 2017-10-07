@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantAPI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,5 +10,40 @@ namespace RestaurantAPI.Controllers.API
 {
     public class RestaurantsApiController : ApiController
     {
+        private ApplicationDbContext _context;
+        public RestaurantsApiController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
+        [HttpGet]
+        public IHttpActionResult Restaurants()
+        {
+            var viewModel = _context.Restaurants.ToList();
+            return Ok(viewModel);
+        }
+
+        [HttpGet]
+        public IHttpActionResult Restaurants(int id)
+        {
+            var restaurant = _context.Restaurants.SingleOrDefault(r => r.ID == id);
+            if (restaurant != null)
+                return Ok(restaurant);
+
+            return NotFound();
+        }
+
+        [HttpGet]
+        public IHttpActionResult Restaurants(string name)
+        {
+            var restaurant = _context.Restaurants.SingleOrDefault(r => r.Name == name);
+            if (restaurant != null)
+                return Ok(restaurant);
+
+            return NotFound();
+        }
+
+        [HttpDelete]
+         
     }
 }
