@@ -1,0 +1,30 @@
+﻿.title_container{
+    width: 50%;
+    background: lightgreen;
+
+}
+
+.title_container p{
+    margin-left:10px;
+    margin-right:10px;
+}
+.title_container h2{
+    margin-left:10px;
+    margin-right:10px;
+}
+.example_container{
+    width: 50%;
+    background: lightblue;
+}
+.example_container h4{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.example_container code{
+    display: block;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.api_container{
+    display: flex;
+}
