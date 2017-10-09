@@ -1,0 +1,26 @@
+﻿@model RestaurantAPI.ViewModels.DocumentViewModel
+@{
+    ViewBag.Title = "Documents";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*@section Styles{
+    <link href="@Url.Content("~/Content/DocumentsStyle.css")" rel="stylesheet" type="text/css" />;    
+}
+*@
+@Styles.Render("~/Styles/DocumentsStyle.css")
+
+<h2>Documents</h2>
+@foreach (var documentItem in Model.DocumentItems)
+{
+    <div class="api_container">
+        <div class="title_container">
+            <h2 id="title">@documentItem.Title</h2>
+            <p>@documentItem.Information</p>
+        </div>
+        <div class="example_container">
+            <h4>Example request:</h4>
+            <code>@Html.Raw(Html.Encode(documentItem.ExampleRequest).Replace("\n","<br/>"))</code>
+        </div>
+    </div>
+
+}
