@@ -1,15 +1,59 @@
-﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿@model RestaurantAPI.Models.Restaurant
+@{
+    ViewBag.Title = "Register";
 }
-<html>
-<head>
-    <title>Hello React</title>
-</head>
-<body>
-    <div id="content"></div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.3.2/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.7.1/remarkable.min.js"></script>
-    <script src="@Url.Content("~/Scripts/ReactJS/ReactTest.jsx")"></script>
-</body>
-</html>
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("AddRestaurant", "RestaurantApi", "/api/restaurants", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <h4>Add a new restaurant.</h4>
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Name, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Name, new { @id = "name", @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Address, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Address, new { @id= "address", @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" id ="submit-restaurant" value="Submit" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            $("#submit-restaurant").on("click", function (e) {
+                e.preventDefault();
+                AddRestaurant();
+            });
+        });
+        function AddRestaurant() {
+            var restaurant = new Object();
+            restaurant.Name = $("#name").val();
+            restaurant.Address = $("#address").val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/RestaurantsApi/',
+                data: JSON.stringify(restaurant),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function () {
+                    console.log("success");
+                }
+            });
+        }
+    </script>
+    }
