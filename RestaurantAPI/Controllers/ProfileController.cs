@@ -6,18 +6,12 @@ using System.Web.Mvc;
 
 namespace RestaurantAPI.Controllers
 {
-    public class HomeController : Controller
+    public class ProfileController : Controller
     {
-        // GET: Home
+        // GET: Profile
         public ActionResult Index()
         {
             return View();
         }
-
-        public void add_org()
-        {
-
-        }
-
     }
 }

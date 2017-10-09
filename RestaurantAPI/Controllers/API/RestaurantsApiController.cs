@@ -55,9 +55,18 @@ namespace RestaurantAPI.Controllers.API
                 return Ok();
             }
             return NotFound();
-                
-
         }
+        [HttpPost]
+        public IHttpActionResult Add_Restaurant(string name)
+        {
+            return Ok();
+        }
+        [HttpPut]
+        public IHttpActionResult Update_Restaurant(int id)
+        {
+            return Ok();
+        }
+       
          
     }
 }
