@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
 <h2>Home</h2>
 
 <!--<form action="">
@@ -14,7 +13,67 @@
 
 </form>-->
 <div class="">
-    Organisation <input name="org_name" /> <button class="add_org">ADD</button>
+    List of restaurants <button class="add_restaurant" onclick="@("window.location.href='" + @Url.Action("Index", "Restaurants")+ "'");">ADD NEW</button><br />
+    <input type="text" id="search-input" onkeyup="searchFunction()" placeholder="Search for restaurants" />
+    <ul id="list_container">
+
+    </ul>
 </div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function searchFunction() {
+            var input, filter, ul, li, a, i;
+            input = document.getElementById("search-input")
+            filter = input.value.toUpperCase();
+            ul = document.getElementById("list_container")
+            li = ul.getElementsByTagName('li');
+            let = length = li.length
+            for (i = 0; i < length; i++) {
+                a = li[i].getElementsByTagName("a")[0];
+                if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                    li[i].style.display = "";
+                } else {
+                    li[i].style.display = "none";
+                }
+            }
+        }
+        function createList(result) {
+            var list = $("#list_container")
+            $.each(result, function (i) {
+                var li = $('<li/>')
+                    .addClass('list_item')
+                    .appendTo(list)
+                var aaa = $('<a/>')
+                    .addClass('list-a')
+                    .text(result[i].Name)
+                    .appendTo(li)
+                    .click(function () {
+                        var id = result[i].Id;
+                        var url = '@Url.Action("Restaurant", "Home", new {id = "__id__" })';
+                        window.location.href = url.replace('__id__', id);
+                    })
+            })
+        };
+        $(document).ready(function () {
+
+            $.ajax({
+                type: 'GET',
+                url: '/api/RestaurantsApi',
+                dataType: 'json',
+                success: function (result) {
+                    createList(result)
+                },
+                error: function (xhr, ajaxOptions, error) {
+                    console.log(xhr.status)
+                    console.log(xhr.responseText)
+                    console.log(error)
+                }
+            });
+        });
+
+    </script>
+}
 
 

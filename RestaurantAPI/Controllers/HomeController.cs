@@ -13,10 +13,11 @@ namespace RestaurantAPI.Controllers
         {
             return View();
         }
-
-        public void add_org()
+        // GET: Home/Restaurant/{id}
+        public ActionResult Restaurant(int id)
         {
-
+            ViewBag.RestaurantId = id;
+            return View();
         }
 
     }

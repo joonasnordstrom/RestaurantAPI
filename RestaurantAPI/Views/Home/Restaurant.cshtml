@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Restaurant";
+
+}
+
+<h2 id="restaurant-title"></h2>
+
+<div id="dishes-container">
+
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function createDishes(result) {
+            var container = $("#dish-container")
+            $.each(result, function (i) {
+                var p = $('<p/>')
+                    .addClass('dish-item')
+                    .appendTo(container)
+            })
+ 
+        };
+        $(document).ready(function () {
+            var id = @ViewBag.RestaurantId;
+            $.ajax({
+                type: 'GET',
+                url: '/api/RestaurantsApi/{id}',
+                dataType: 'json',
+                success: function (result) {
+                    console.log("Success")
+                    createDishes(result)
+                },
+                error: function (xhr, ajaxOptions, error) {
+                    console.log(xhr.status)
+                    console.log(xhr.responseText)
+                    console.log(error)
+                }
+
+            })
+        })
+    </script>
+    
+    
+    
+    
+}

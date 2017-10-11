@@ -1,4 +1,5 @@
-﻿using RestaurantAPI.DTOs;
+﻿using Newtonsoft.Json;
+using RestaurantAPI.DTOs;
 using RestaurantAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Script.Serialization;
 
 namespace RestaurantAPI.Controllers.API
 {
@@ -18,14 +20,23 @@ namespace RestaurantAPI.Controllers.API
         }
 
         [HttpGet]
-        public IHttpActionResult Get()
+        public IHttpActionResult GetRestaurants()
         {
-            var viewModel = _context.Restaurants.ToList();
-            return Ok(viewModel);
+            /*var viewModel = _context.Restaurants.ToList();
+            return Ok(viewModel);*/
+            var restaurants = from b in _context.Restaurants
+                              select new RestaurantDTO()
+                              {
+                                  Id = b.ID,
+                                  Name = b.Name,
+                                  Address = b.Address,
+                              };
+            return Ok(restaurants);
         }
 
         [HttpGet]
-        public IHttpActionResult Get(int id)
+        [Route("Restaurants/{id}")]
+        public IHttpActionResult GetRestaurants(int id)
         {
             var restaurant = _context.Restaurants.SingleOrDefault(r => r.ID == id);
             if (restaurant == null)
