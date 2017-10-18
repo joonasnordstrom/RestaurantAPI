@@ -7,13 +7,13 @@ namespace RestaurantAPI.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class init : IMigrationMetadata
+    public sealed partial class EntityModelsToClasses : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(init));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(EntityModelsToClasses));
         
         string IMigrationMetadata.Id
         {
-            get { return "201710111219453_init"; }
+            get { return "201710181748580_EntityModelsToClasses"; }
         }
         
         string IMigrationMetadata.Source

@@ -20,10 +20,8 @@ namespace RestaurantAPI.Controllers.API
         }
 
         [HttpGet]
-        public IHttpActionResult GetRestaurants()
+        public IHttpActionResult Get()
         {
-            /*var viewModel = _context.Restaurants.ToList();
-            return Ok(viewModel);*/
             var restaurants = from b in _context.Restaurants
                               select new RestaurantDTO()
                               {
@@ -35,10 +33,10 @@ namespace RestaurantAPI.Controllers.API
         }
 
         [HttpGet]
-        [Route("Restaurants/{id}")]
+        [Route("api/restaurantsapi/{id}")]
         public IHttpActionResult GetRestaurants(int id)
         {
-            var restaurant = _context.Restaurants.SingleOrDefault(r => r.ID == id);
+            var restaurant = _context.Restaurants.ToList().SingleOrDefault(r => r.ID == id);
             if (restaurant == null)
                 return NotFound();
 
@@ -70,6 +68,7 @@ namespace RestaurantAPI.Controllers.API
             return NotFound();
         }
 
+        [System.Web.Mvc.ValidateAntiForgeryToken()]
         [HttpPost]
         public IHttpActionResult Post(RestaurantDTO model)
         {
@@ -100,7 +99,72 @@ namespace RestaurantAPI.Controllers.API
 
             return Ok();
         }
-       
-         
+
+        [HttpGet]
+        [Route("api/RestaurantsApi/{restaurantId}/Dishes")]
+        public IHttpActionResult GetDishes(int restaurantId)
+        {
+            var dishesInDb = _context.Dishes.ToList().Where(d => d.RestaurantID == restaurantId);
+            if (!dishesInDb.Any())
+                return NotFound();
+
+            IEnumerable<DishDTO> dishes;
+            dishes = from b in dishesInDb
+              select new DishDTO()
+              {
+                  ID = b.ID,
+                  Name = b.Name,
+                  RestaurantID = restaurantId,
+              };
+            return Ok(dishes);
+        }
+
+        [System.Web.Mvc.ValidateAntiForgeryToken()]
+        [HttpPost]
+        [Route("api/RestaurantsApi/{restaurantId}/Dishes")]
+        public IHttpActionResult AddDish(DishDTO model)
+        {
+            Dish newDish = new Dish();
+
+            if (!ModelState.IsValid)
+                return BadRequest("Model state is not valid.");
+ 
+            newDish.Name = model.Name;
+            newDish.RestaurantID = model.RestaurantID;
+            newDish.Price = model.Price;
+
+            _context.Dishes.Add(newDish);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("api/restaurantsApi/{restaurantID}/Dishes/{name}")]
+        public IHttpActionResult GetDishByName(string name)
+        {
+        var dish = _context.Dishes.SingleOrDefault(r => r.Name == name);
+            if (dish != null)
+                return Ok(dish);
+
+            return NotFound();
+        }
+
+        [HttpDelete]
+        [Route("api/restaurantApi/{restaurantId}/Dishes/{id}")]
+        public IHttpActionResult DeleteDish(int id)
+        {
+            var dishToDelete = _context.Restaurants.ToList().SingleOrDefault(r => r.ID == id);
+
+            if (dishToDelete != null)
+            {
+                _context.Restaurants.Remove(dishToDelete);
+                _context.SaveChanges();
+                return Ok();
+            }
+            return NotFound();
+        }
+
+
     }
 }

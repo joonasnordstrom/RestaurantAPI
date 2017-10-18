@@ -241,20 +241,24 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\API\DishesApiController.cs" />
     <Compile Include="Controllers\API\RestaurantsApiController.cs" />
     <Compile Include="Controllers\DocumentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\RestaurantsController.cs" />
+    <Compile Include="DTOs\DishDTO.cs" />
     <Compile Include="DTOs\RestaurantDTO.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710111219453_init.cs" />
-    <Compile Include="Migrations\201710111219453_init.Designer.cs">
-      <DependentUpon>201710111219453_init.cs</DependentUpon>
+    <Compile Include="Migrations\201710161651575_removedImagePathFromDishes.cs" />
+    <Compile Include="Migrations\201710161651575_removedImagePathFromDishes.Designer.cs">
+      <DependentUpon>201710161651575_removedImagePathFromDishes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201710181748580_EntityModelsToClasses.cs" />
+    <Compile Include="Migrations\201710181748580_EntityModelsToClasses.Designer.cs">
+      <DependentUpon>201710181748580_EntityModelsToClasses.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -348,8 +352,11 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710111219453_init.resx">
-      <DependentUpon>201710111219453_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710161651575_removedImagePathFromDishes.resx">
+      <DependentUpon>201710161651575_removedImagePathFromDishes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710181748580_EntityModelsToClasses.resx">
+      <DependentUpon>201710181748580_EntityModelsToClasses.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
